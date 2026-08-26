@@ -16,7 +16,7 @@
                 <p class="text-sm text-slate-500">{{ $siswas->total() }} siswa terdaftar</p>
             </div>
             <div class="flex items-center gap-1.5">
-                <a href="{{ route('siswa.import') }}" class="inline-flex items-center gap-1.5 text-sm font-medium px-4 py-2.5 rounded-xl transition" style="background-color:#ffcc00; color:#4a3900" onmouseover="this.style.backgroundColor='#e6b800'" onmouseout="this.style.backgroundColor='#ffcc00'">Import Excel</a>
+                <a href="{{ route('siswa.import') }}" class="inline-flex items-center gap-1.5 text-sm font-medium px-4 py-2.5 rounded-xl transition" style="background-color:#ffcc00; color:#4a3900" onmouseover="this.style.backgroundColor='#e6b800'" onmouseout="this.style.backgroundColor='#ffcc00'">Import Massal</a>
                 <a href="{{ route('siswa.create') }}" class="inline-flex items-center gap-1.5 text-sm font-medium brand-bg text-white px-4 py-2.5 rounded-xl brand-bg-hover transition">+ Tambah Siswa</a>
             </div>
         </div>
