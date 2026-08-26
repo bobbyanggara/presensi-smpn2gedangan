@@ -57,7 +57,7 @@
                 </td>
             </tr>
             @empty
-            <tr><td colspan="6" class="px-6 py-12 text-center text-slate-400">Tidak ada data absensi di bulan ini</td></tr>
+            <tr><td colspan="6" class="px-6 py-12 text-center text-slate-400">Kosong</td></tr>
             @endforelse
         </tbody>
     </table>
@@ -98,7 +98,7 @@
 
         if (!rows.length) {
             var tr = el('tr');
-            var td = el('td', 'px-6 py-12 text-center text-slate-400', 'Tidak ada data absensi di bulan ini');
+            var td = el('td', 'px-6 py-12 text-center text-slate-400', 'Kosong');
             td.colSpan = 6;
             tr.appendChild(td);
             tbody.appendChild(tr);
