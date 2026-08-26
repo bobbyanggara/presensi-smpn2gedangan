@@ -222,7 +222,7 @@ $namaDepan = explode(' ', auth()->user()->name)[0];
                 <div class="card-icon" style="background:#f5f3ff;color:#8b5cf6;">
                     <svg style="width:16px;height:16px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                 </div>
-                <h3>Kehadiran per Lokasi</h3>
+                <h3>Kehadiran per Lokasi (Hari ini)</h3>
             </div>
         </div>
         @php $dotColors = ['#0e7c3f', '#ffcc00', '#0ea5e9', '#a855f7', '#f97316']; @endphp
