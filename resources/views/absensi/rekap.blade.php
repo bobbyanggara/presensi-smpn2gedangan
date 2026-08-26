@@ -7,15 +7,15 @@
             <h3 class="font-semibold text-slate-800">Daftar Kehadiran</h3>
             <p id="rekap-count-text" class="text-sm text-slate-500">{{ $absensis->count() }} siswa sudah hadir</p>
         </div>
-        <div class="flex items-center gap-3">
-            <form method="GET" action="{{ route('absensi.rekap') }}" class="flex items-center gap-3">
-                <select name="kelas" onchange="this.form.submit()" class="text-sm border border-slate-200 rounded-lg pl-3 pr-8 py-2 brand-ring outline-none w-48">
+        <div class="w-full sm:w-auto flex flex-wrap items-center gap-3">
+            <form method="GET" action="{{ route('absensi.rekap') }}" class="w-full sm:w-auto flex flex-wrap items-center gap-3">
+                <select name="kelas" onchange="this.form.submit()" class="text-sm border border-slate-200 rounded-lg pl-3 pr-8 py-2 brand-ring outline-none w-full sm:w-48">
                     <option value="">Semua kelas</option>
                     @foreach($kelasOptions as $option)
                         <option value="{{ $option }}" @selected($kelas === $option)>{{ $option }}</option>
                     @endforeach
                 </select>
-                <select name="location_id" onchange="this.form.submit()" class="text-sm border border-slate-200 rounded-lg px-3 py-2 brand-ring outline-none w-48">
+                <select name="location_id" onchange="this.form.submit()" class="text-sm border border-slate-200 rounded-lg px-3 py-2 brand-ring outline-none w-full sm:w-48">
                     <option value="">Semua lokasi</option>
                     @foreach($locations as $location)
                         <option value="{{ $location->id }}" @selected((string) $locationId === (string) $location->id)>{{ $location->name }}</option>
@@ -24,7 +24,7 @@
             </form>
             <a href="{{ route('absensi.rekap.export', request()->only(['kelas', 'location_id'])) }}"
                id="rekap-export-btn"
-               class="inline-flex items-center gap-2 text-sm font-medium brand-bg text-white px-4 py-2 rounded-lg brand-bg-hover transition">
+               class="w-full sm:w-auto justify-center inline-flex items-center gap-2 text-sm font-medium brand-bg text-white px-4 py-2 rounded-lg brand-bg-hover transition">
                 <svg style="width:16px;height:16px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" /></svg>
                 Export ke Excel
             </a>

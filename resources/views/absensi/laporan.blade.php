@@ -3,20 +3,20 @@
 
 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
     <div class="px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-4">
-        <form method="GET" action="{{ route('absensi.laporan') }}" class="flex items-center gap-3">
-            <select name="bulan" onchange="this.form.submit()" class="text-sm border border-slate-200 rounded-lg px-3 py-2 brand-ring outline-none">
+        <form method="GET" action="{{ route('absensi.laporan') }}" class="w-full sm:w-auto flex flex-wrap items-center gap-3">
+            <select name="bulan" onchange="this.form.submit()" class="text-sm border border-slate-200 rounded-lg px-3 py-2 brand-ring outline-none w-full sm:w-auto">
                 @for($i = 1; $i <= 12; $i++)
                     <option value="{{ $i }}" {{ $bulan == $i ? 'selected' : '' }}>{{ \Carbon\Carbon::create()->month($i)->translatedFormat('F') }}</option>
                 @endfor
             </select>
-            <input type="number" name="tahun" value="{{ $tahun }}" onchange="this.form.submit()" class="w-24 text-sm border border-slate-200 rounded-lg px-3 py-2 brand-ring outline-none">
-            <select name="kelas" onchange="this.form.submit()" class="text-sm border border-slate-200 rounded-lg pl-3 pr-8 py-2 brand-ring outline-none w-48">
+            <input type="number" name="tahun" value="{{ $tahun }}" onchange="this.form.submit()" class="w-full sm:w-24 text-sm border border-slate-200 rounded-lg px-3 py-2 brand-ring outline-none">
+            <select name="kelas" onchange="this.form.submit()" class="text-sm border border-slate-200 rounded-lg pl-3 pr-8 py-2 brand-ring outline-none w-full sm:w-48">
                 <option value="">Semua kelas</option>
                 @foreach($kelasOptions as $option)
                     <option value="{{ $option }}" @selected($kelas === $option)>{{ $option }}</option>
                 @endforeach
             </select>
-            <select name="location_id" onchange="this.form.submit()" class="text-sm border border-slate-200 rounded-lg px-3 py-2 brand-ring outline-none w-48">
+            <select name="location_id" onchange="this.form.submit()" class="text-sm border border-slate-200 rounded-lg px-3 py-2 brand-ring outline-none w-full sm:w-48">
                 <option value="">Semua lokasi</option>
                 @foreach($locations as $location)
                     <option value="{{ $location->id }}" @selected((string) $locationId === (string) $location->id)>{{ $location->name }}</option>
@@ -25,7 +25,7 @@
         </form>
         <a href="{{ route('absensi.export', request()->only(['bulan', 'tahun', 'kelas', 'location_id'])) }}"
                id="laporan-export-btn"
-               class="inline-flex items-center gap-2 text-sm font-medium brand-bg text-white px-4 py-2 rounded-lg brand-bg-hover transition">
+               class="w-full sm:w-auto justify-center inline-flex items-center gap-2 text-sm font-medium brand-bg text-white px-4 py-2 rounded-lg brand-bg-hover transition">
                 <svg style="width:16px;height:16px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" /></svg>
                 Export ke Excel
             </a>
