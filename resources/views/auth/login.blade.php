@@ -132,7 +132,24 @@
         .login-mobile-header{ display:none; }
         @media (max-width:960px){
             .login-left{ display:none; }
-            .login-right{ background:#fff; padding:40px 24px; }
+            .login-right{
+                min-height:100vh;
+                align-items:flex-start;
+                padding:32px 20px;
+                background-image:
+                    linear-gradient(180deg, rgba(6,59,31,.55) 0%, rgba(6,59,31,.65) 55%, rgba(6,59,31,.85) 100%),
+                    url('{{ asset('images/login-bg.webp') }}');
+                background-size:cover;
+                background-position:center;
+                background-color:var(--brand-green-darker);
+            }
+            .login-card{
+                margin-top:24px;
+                background:#fff;
+                border-radius:18px;
+                padding:26px 22px;
+                box-shadow:0 10px 30px rgba(0,0,0,.25);
+            }
             .login-mobile-header{ display:flex; flex-direction:column; align-items:center; text-align:center; margin-bottom:28px; }
             .login-mobile-header .login-logo-box{ width:56px; height:56px; background:#fff; border:1px solid #e2e8f0; margin-bottom:12px; }
             .login-mobile-header h1{ font-size:15px; font-weight:800; color:#0f172a; margin:0; }
