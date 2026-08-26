@@ -8,15 +8,22 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('siswas', function (Blueprint $table) {
-            $table->index('nis');
-        });
+        // Kolom 'nis' baru ditambahkan di migration 2026_08_19_000001,
+        // jadi migration ini (tanggal 17) harus skip kalau kolomnya belum ada
+        // (misal saat migrate:fresh dari database kosong).
+        if (Schema::hasColumn('siswas', 'nis')) {
+            Schema::table('siswas', function (Blueprint $table) {
+                $table->index('nis');
+            });
+        }
     }
 
     public function down(): void
     {
-        Schema::table('siswas', function (Blueprint $table) {
-            $table->dropIndex(['nis']);
-        });
+        if (Schema::hasColumn('siswas', 'nis')) {
+            Schema::table('siswas', function (Blueprint $table) {
+                $table->dropIndex(['nis']);
+            });
+        }
     }
 };
