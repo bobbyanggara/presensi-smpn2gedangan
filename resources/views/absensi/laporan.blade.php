@@ -23,8 +23,8 @@
                 @endforeach
             </select>
         </form>
-        <a href="{{ route('absensi.rekap.export', request()->only(['kelas', 'location_id'])) }}"
-               id="rekap-export-btn"
+        <a href="{{ route('absensi.export', request()->only(['bulan', 'tahun', 'kelas', 'location_id'])) }}"
+               id="laporan-export-btn"
                class="inline-flex items-center gap-2 text-sm font-medium brand-bg text-white px-4 py-2 rounded-lg brand-bg-hover transition">
                 <svg style="width:16px;height:16px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" /></svg>
                 Export ke Excel

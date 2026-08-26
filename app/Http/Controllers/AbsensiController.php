@@ -313,10 +313,12 @@ class AbsensiController extends Controller
     {
         $bulan = $request->input('bulan', date('m'));
         $tahun = $request->input('tahun', date('Y'));
+        $locationId = $request->input('location_id', '');
+        $kelas = $request->input('kelas', '');
 
         $namaFile = 'absensi_' . $bulan . '_' . $tahun . '.xlsx';
 
-        return Excel::download(new AbsensiExport($bulan, $tahun), $namaFile);
+        return Excel::download(new AbsensiExport($bulan, $tahun, $locationId ?: null, $kelas ?: null), $namaFile);
     }
 
     // Kumpulan data dashboard, dipakai bareng oleh dashboard() (load awal halaman)
