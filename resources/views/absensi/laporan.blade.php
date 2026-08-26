@@ -31,7 +31,8 @@
             </a>
     </div>
 
-    <table class="w-full text-sm">
+    <div class="overflow-x-auto">
+    <table class="w-full text-sm min-w-[720px]">
         <thead>
             <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wide">
                 <th class="text-left font-medium px-6 py-3">Tanggal</th>
@@ -59,6 +60,7 @@
             @endforelse
         </tbody>
     </table>
+    </div>
 </div>
 
 @php

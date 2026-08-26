@@ -36,7 +36,8 @@
     </p>
 
 
-    <table class="w-full text-sm">
+    <div class="overflow-x-auto">
+    <table class="w-full text-sm min-w-[640px]">
         <thead>
             <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wide">
                 <th class="text-left font-medium px-6 py-3">Nama</th>
@@ -62,6 +63,7 @@
             @endforelse
         </tbody>
     </table>
+    </div>
 </div>
 
 <script>
