@@ -1,13 +1,11 @@
 <?php $title = 'Rekap Hari Ini'; $subtitle = \Carbon\Carbon::now()->translatedFormat('l, d F Y'); ?>
 @include('partials.header')
 
-@include('partials.jam-realtime', ['size' => 'small'])
-
 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
     <div class="px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-4">
         <div>
             <h3 class="font-semibold text-slate-800">Daftar Kehadiran</h3>
-            <p id="rekap-count-text" class="text-sm text-slate-500">{{ $absensis->count() }} siswa sudah absen</p>
+            <p id="rekap-count-text" class="text-sm text-slate-500">{{ $absensis->count() }} siswa sudah hadir</p>
         </div>
         <div class="flex items-center gap-3">
             <form method="GET" action="{{ route('absensi.rekap') }}" class="flex items-center gap-3">
@@ -60,7 +58,7 @@
                 </td>
             </tr>
             @empty
-            <tr><td colspan="5" class="px-6 py-12 text-center text-slate-400">Belum ada siswa yang absen hari ini</td></tr>
+            <tr><td colspan="5" class="px-6 py-12 text-center text-slate-400">Belum ada siswa yang hadir hari ini</td></tr>
             @endforelse
         </tbody>
     </table>
@@ -96,7 +94,7 @@
 
         if (!rows.length) {
             var tr = el('tr');
-            var td = el('td', 'px-6 py-12 text-center text-slate-400', 'Belum ada siswa yang absen hari ini');
+            var td = el('td', 'px-6 py-12 text-center text-slate-400', 'Belum ada siswa yang hadir hari ini');
             td.colSpan = 5;
             tr.appendChild(td);
             tbody.appendChild(tr);
@@ -128,7 +126,7 @@
             })
             .then(function (data) {
                 renderRows(data.rows);
-                if (countText) countText.textContent = data.count + ' siswa sudah absen';
+                if (countText) countText.textContent = data.count + ' siswa sudah hadir';
             })
             .catch(function (err) {
                 console.error('Gagal refresh rekap:', err);

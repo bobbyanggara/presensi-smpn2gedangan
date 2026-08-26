@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title><?php echo $title ?? 'Sistem Absensi'; ?></title>
+    <title><?php echo $title ?? 'Sistem Presensi'; ?></title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:500,600,700,800|inter:400,500,600,700&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <style>
         /* ===== Brand palette — SMP Negeri 2 Gedangan (kuning-hijau + aksen hidup) ===== */
         :root{
@@ -139,15 +140,20 @@
     <!-- Main content -->
     <main class="flex-1 lg:ml-64 min-w-0 flex flex-col">
         <header class="bg-white/80 backdrop-blur border-b border-slate-200 px-5 sm:px-8 py-4 sticky top-0 z-20">
-            <div class="flex items-center gap-3">
-                <button @click="sidebarOpen = true" class="lg:hidden p-2 -ml-2 rounded-lg text-slate-500 hover:bg-slate-100 transition shrink-0">
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" /></svg>
-                </button>
-                <div class="min-w-0">
-                    <h2 class="text-lg sm:text-xl font-semibold text-slate-800 truncate"><?php echo $title ?? 'Dashboard'; ?></h2>
-                    <?php if(isset($subtitle)): ?>
-                        <p class="text-sm text-slate-500 mt-0.5 truncate"><?php echo $subtitle; ?></p>
-                    <?php endif; ?>
+            <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3 min-w-0">
+                    <button @click="sidebarOpen = true" class="lg:hidden p-2 -ml-2 rounded-lg text-slate-500 hover:bg-slate-100 transition shrink-0">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" /></svg>
+                    </button>
+                    <div class="min-w-0">
+                        <h2 class="text-lg sm:text-xl font-semibold text-slate-800 truncate"><?php echo $title ?? 'Dashboard'; ?></h2>
+                        <?php if(isset($subtitle)): ?>
+                            <p class="text-sm text-slate-500 mt-0.5 truncate"><?php echo $subtitle; ?></p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="shrink-0">
+                    @include('partials.jam-realtime', ['size' => 'small', 'inline' => true])
                 </div>
             </div>
         </header>

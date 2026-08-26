@@ -77,7 +77,7 @@
                         <form action="{{ route('classes.destroy', $class) }}" method="POST" class="inline">
                             @csrf @method('DELETE')
                             <button type="submit"
-                                onclick="return confirm({{ $class->students_count > 0 ? '\'Kelas ' . addslashes($class->name) . ' masih punya ' . $class->students_count . ' siswa. Hapus kelas ini akan ikut menghapus SEMUA siswa dan riwayat absensinya. Lanjutkan?\'' : '\'Yakin hapus kelas ' . addslashes($class->name) . '?\'' }})"
+                                onclick="return confirm({{ $class->students_count > 0 ? '\'Kelas ' . addslashes($class->name) . ' masih punya ' . $class->students_count . ' siswa. Hapus kelas ini akan ikut menghapus SEMUA siswa dan riwayat presensinya. Lanjutkan?\'' : '\'Yakin hapus kelas ' . addslashes($class->name) . '?\'' }})"
                                 class="text-red-500 hover:text-red-700 font-medium">Hapus</button>
                         </form>
                     </td>

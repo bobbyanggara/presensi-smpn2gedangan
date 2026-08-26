@@ -363,6 +363,24 @@ class AbsensiController extends Controller
             ];
         })->values()->all();
 
+        // Tren 7 hari terakhir per lokasi (buat grafik yang menampilkan
+        // garis terpisah per lokasi, mis. Masjid vs Perpustakaan).
+        $trenPerLokasi = $locations->map(function ($location) {
+            $harian = [];
+            for ($i = 6; $i >= 0; $i--) {
+                $tanggal = Carbon::now()->subDays($i);
+                $harian[] = Absensi::where('tanggal', $tanggal->format('Y-m-d'))
+                    ->where('location_id', $location->id)
+                    ->distinct('siswa_id')
+                    ->count('siswa_id');
+            }
+
+            return [
+                'nama' => $location->name,
+                'data' => $harian,
+            ];
+        })->values()->all();
+
         $absensiTerbaru = Absensi::with(['siswa', 'location'])
             ->where('tanggal', $hariIni)
             ->orderBy('jam_masuk', 'desc')
@@ -371,7 +389,7 @@ class AbsensiController extends Controller
 
         return compact(
             'totalSiswa', 'jumlahHadir', 'jumlahBelumAbsen', 'persentaseHadir',
-            'trenMingguan', 'maxTren', 'lokasiStats', 'absensiTerbaru'
+            'trenMingguan', 'maxTren', 'lokasiStats', 'trenPerLokasi', 'absensiTerbaru'
         );
     }
 
@@ -392,6 +410,7 @@ class AbsensiController extends Controller
             'tren_mingguan' => $data['trenMingguan'],
             'max_tren' => $data['maxTren'],
             'lokasi_stats' => $data['lokasiStats'],
+            'tren_per_lokasi' => $data['trenPerLokasi'],
             'absensi_terbaru' => $data['absensiTerbaru']->map(function ($absen) {
                 return [
                     'id' => $absen->id,

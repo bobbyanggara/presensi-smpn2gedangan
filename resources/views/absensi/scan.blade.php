@@ -1,4 +1,4 @@
-<?php $title = 'Scan Absensi'; ?>
+<?php $title = 'Scan Presensi'; ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -287,7 +287,7 @@
     </div>
 
     <div id="scan-location-wrap" class="panel-card" style="padding:0.95rem 1.1rem; text-align:left;">
-        <label for="location_id" class="field-eyebrow">Titik absen</label>
+        <label for="location_id" class="field-eyebrow">Titik hadir</label>
         <div class="select-wrap">
             <select
                 name="location_id"
@@ -303,7 +303,7 @@
             <svg class="select-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.25"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
         </div>
         <p id="location-info" class="field-hint">
-            Silakan pilih lokasi absen terlebih dahulu sebelum melakukan scan.
+            Silakan pilih lokasi hadir terlebih dahulu sebelum melakukan scan.
         </p>
     </div>
 
@@ -349,7 +349,7 @@
             <span id="riwayat-count-pill" class="riwayat-count-pill">0</span>
         </div>
         <div id="riwayat-list" class="riwayat-list">
-            <p class="riwayat-empty">Pilih lokasi absen untuk melihat riwayat.</p>
+            <p class="riwayat-empty">Pilih lokasi hadir untuk melihat riwayat.</p>
         </div>
     </div>
 </div>
@@ -563,7 +563,7 @@
             @if($p['status'] === 'hadir')
                 <span class="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 text-sm font-medium px-3 py-1.5 rounded-full"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Hadir · {{ $p['jam'] }}</span>
             @else
-                <span class="inline-flex items-center gap-1.5 bg-slate-100 text-slate-600 text-sm font-medium px-3 py-1.5 rounded-full">Sudah absen pukul {{ $p['jam'] }}</span>
+                <span class="inline-flex items-center gap-1.5 bg-slate-100 text-slate-600 text-sm font-medium px-3 py-1.5 rounded-full">Sudah hadir pukul {{ $p['jam'] }}</span>
             @endif
         </div>
     </div>
@@ -618,7 +618,7 @@
             if (badge) { badge.classList.add('status-hadir'); badge.textContent = 'Hadir · ' + p.jam; }
         } else {
             resultBox.classList.add('status-sudah');
-            if (badge) { badge.classList.add('status-sudah'); badge.textContent = 'Sudah absen · ' + p.jam; }
+            if (badge) { badge.classList.add('status-sudah'); badge.textContent = 'Sudah hadir · ' + p.jam; }
         }
 
         resultBox.classList.remove('hidden');
@@ -728,7 +728,7 @@
 
         if (!items.length) {
             if (riwayatCountPill) riwayatCountPill.textContent = '0';
-            renderRiwayatPlaceholder('Belum ada absensi di lokasi ini hari ini.');
+            renderRiwayatPlaceholder('Belum ada yang hadir di lokasi ini hari ini.');
             return;
         }
 
@@ -758,7 +758,7 @@
     function loadRiwayat(highlightNis) {
         var locId = locationSelect.value;
         if (!locId) {
-            renderRiwayatPlaceholder('Pilih lokasi absen untuk melihat riwayat.');
+            renderRiwayatPlaceholder('Pilih lokasi hadir untuk melihat riwayat.');
             return;
         }
         if (riwayatLoading) return;
@@ -878,7 +878,7 @@
             scanResultBox.classList.add('status-sudah');
             if (scanResultBadge) {
                 scanResultBadge.classList.add('status-sudah');
-                scanResultBadge.textContent = 'Sudah absen · ' + p.jam;
+                scanResultBadge.textContent = 'Sudah hadir · ' + p.jam;
             }
         }
 
@@ -1049,10 +1049,10 @@
         var namaUcap = toSpeechCase((p.nama || 'Siswa').trim());
 
         if (p.status === 'sudah') {
-            // Sudah absen sebelumnya: bunyi nada rendah + ucapkan bahwa sudah absen
+            // Sudah hadir sebelumnya: bunyi nada rendah + ucapkan bahwa sudah hadir
             playBeep(523, 0.12);
             setTimeout(function () {
-                speakText(namaUcap + ' sudah absen sebelumnya');
+                speakText(namaUcap + ' sudah hadir sebelumnya');
             }, 180);
         } else {
             // Hadir baru: bunyi "tit" lalu ucapkan nama siswa
@@ -1070,7 +1070,7 @@
 
         var statusConfig = {
             hadir: { badge: 'bg-emerald-50 text-emerald-700', dot: 'bg-emerald-500', label: 'Hadir' },
-            sudah: { badge: 'bg-slate-100 text-slate-600', dot: '', label: 'Sudah absen pukul' }
+            sudah: { badge: 'bg-slate-100 text-slate-600', dot: '', label: 'Sudah hadir pukul' }
         };
         var cfg = statusConfig[p.status] || statusConfig.hadir;
 
@@ -1251,7 +1251,7 @@
         }
 
         if (!locationSelect.value) {
-            showError('Pilih lokasi absen dulu');
+            showError('Pilih lokasi hadir dulu');
             locationSelect.focus();
             return;
         }

@@ -1,8 +1,6 @@
 <?php $title = 'Laporan Bulanan'; $subtitle = 'Filter dan unduh riwayat kehadiran per bulan'; ?>
 @include('partials.header')
 
-@include('partials.jam-realtime', ['size' => 'small'])
-
 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
     <div class="px-6 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-4">
         <form method="GET" action="{{ route('absensi.laporan') }}" class="flex items-center gap-3">

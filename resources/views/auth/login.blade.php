@@ -154,14 +154,14 @@
 
             <div class="login-left-bottom">
                 <h1 class="login-headline">Halo,<br>selamat datang.</h1>
-                <p class="login-subtext">Kelola data siswa, absensi, dan laporan kehadiran sistem SMP Negeri 2 Gedangan dari satu dashboard.</p>
+                <p class="login-subtext">Kelola data siswa, presensi, dan laporan kehadiran sistem SMP Negeri 2 Gedangan dari satu dashboard.</p>
 
                 <div class="login-feature">
                     <div class="login-feature-icon">
                         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" /></svg>
                     </div>
                     <div>
-                        <p class="login-feature-title">Absensi Cepat</p>
+                        <p class="login-feature-title">Presensi Cepat</p>
                         <p class="login-feature-desc">Scan QR / barcode siswa secara real-time di setiap lokasi.</p>
                     </div>
                 </div>
@@ -195,7 +195,7 @@
                         <img src="{{ asset('images/logo-smp.webp') }}" alt="Logo SMP Negeri 2 Gedangan">
                     </div>
                     <h1>SMP Negeri 2 Gedangan</h1>
-                    <p>Sistem Absensi Siswa</p>
+                    <p>Sistem Presensi Siswa</p>
                 </div>
 
                 <div class="login-eyebrow">Admin Panel</div>

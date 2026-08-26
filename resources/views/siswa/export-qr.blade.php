@@ -1,4 +1,4 @@
-<?php $title = 'QR Absensi'; $subtitle = 'Generate dan unduh QR code untuk absensi siswa'; ?>
+<?php $title = 'QR Presensi'; $subtitle = 'Generate dan unduh QR code untuk presensi siswa'; ?>
 @include('partials.header')
 
 @if(session('success'))
@@ -10,7 +10,7 @@
 
 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
     <div class="px-6 py-4 border-b border-slate-100">
-        <h3 class="font-semibold text-slate-800">Generate QR Absensi</h3>
+        <h3 class="font-semibold text-slate-800">Generate QR Presensi</h3>
         <p class="text-sm text-slate-500">Pilih kelas atau cari nama/NIS, lalu unduh QR barcode dalam format PNG (satu file per siswa) atau PDF (kartu QR gabungan).</p>
     </div>
 

@@ -4,16 +4,14 @@ $subtitle = 'Ringkasan kehadiran hari ini';
 $jam = (int) now()->format('H');
 $sapaan = $jam < 11 ? 'Selamat pagi' : ($jam < 15 ? 'Selamat siang' : ($jam < 18 ? 'Selamat sore' : 'Selamat malam'));
 $namaDepan = explode(' ', auth()->user()->name)[0];
+$dotColors = ['#0e7c3f', '#ffcc00', '#0ea5e9', '#a855f7', '#f97316'];
 ?>
 @include('partials.header')
 
 <style>
-    .dash-welcome{ background-image:linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-darker) 100%); border-radius:16px; padding:22px 24px; color:#fff; margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+    .dash-welcome{ background-image:linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-darker) 100%); border-radius:16px; padding:22px 24px; color:#fff; margin-bottom:20px; }
     .dash-welcome h2{ font-size:19px; font-weight:800; }
     .dash-welcome p{ font-size:13px; color:rgba(255,255,255,.7); margin-top:3px; }
-    .dash-welcome .clock{ text-align:right; }
-    .dash-welcome .clock .time{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:26px; font-weight:700; letter-spacing:.03em; font-variant-numeric:tabular-nums; }
-    .dash-welcome .clock .date{ font-size:12px; color:rgba(255,255,255,.65); margin-top:2px; }
 
     .dash-stats{ display:flex; flex-wrap:wrap; gap:16px; margin-bottom:20px; }
     .dash-stats > *{ flex:1 1 21%; min-width:210px; }
@@ -47,14 +45,7 @@ $namaDepan = explode(' ', auth()->user()->name)[0];
     .loc-bar-fill{ height:100%; border-radius:999px; background:var(--brand-green); }
     .loc-empty{ padding:32px 20px; text-align:center; color:#94a3b8; font-size:13px; }
 
-    .trend-wrap{ display:flex; align-items:flex-end; gap:10px; padding:20px; height:150px; }
-    .trend-col{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; gap:8px; }
-    .trend-bar{ width:100%; max-width:34px; border-radius:8px 8px 3px 3px; background:#e2e8f0; position:relative; min-height:4px; transition:height .3s; }
-    .trend-bar.today{ background:var(--brand-green); }
-    .trend-val{ font-size:11px; font-weight:600; color:#64748b; }
-    .trend-val.today{ color:var(--brand-green-dark); }
-    .trend-lbl{ font-size:11px; color:#94a3b8; margin-top:2px; }
-    .trend-lbl.today{ color:var(--brand-green-dark); font-weight:600; }
+    .trend-wrap{ padding:20px; height:260px; position:relative; }
 
     .avatar-sm{ width:32px; height:32px; border-radius:999px; background:#f1f5f9; color:#64748b; display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:600; flex-shrink:0; }
 
@@ -86,28 +77,9 @@ $namaDepan = explode(' ', auth()->user()->name)[0];
 </style>
 
 <div class="dash-welcome">
-    <div>
-        <h2>{{ $sapaan }}, {{ $namaDepan }} 👋</h2>
-        <p>Berikut ringkasan kehadiran siswa SMP Negeri 2 Gedangan hari ini</p>
-    </div>
-    <div class="clock">
-        <div class="time" id="dash-jam">--:--:--</div>
-        <div class="date" id="dash-tanggal">Memuat tanggal…</div>
-    </div>
+    <h2>{{ $sapaan }}, {{ $namaDepan }} 👋</h2>
+    <p>Berikut ringkasan kehadiran siswa SMP Negeri 2 Gedangan hari ini</p>
 </div>
-<script>
-    (function () {
-        var jamEl = document.getElementById('dash-jam');
-        var tglEl = document.getElementById('dash-tanggal');
-        function update() {
-            var now = new Date();
-            if (jamEl) jamEl.textContent = now.toLocaleTimeString('id-ID', { hour12: false });
-            if (tglEl) tglEl.textContent = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ' · WIB';
-        }
-        update();
-        setInterval(update, 1000);
-    })();
-</script>
 
 <div class="dash-stats">
     <a href="{{ route('siswa.index') }}" class="stat-card" style="--stat-accent:#0ea5e9; text-decoration:none">
@@ -144,14 +116,11 @@ $namaDepan = explode(' ', auth()->user()->name)[0];
                 <h3>Kehadiran 7 Hari Terakhir</h3>
             </div>
         </div>
-        <div class="trend-wrap" id="dash-trend-wrap">
-            @foreach($trenMingguan as $hari)
-                <div class="trend-col">
-                    <span class="trend-val {{ $hari['is_today'] ? 'today' : '' }}">{{ $hari['jumlah'] }}</span>
-                    <div class="trend-bar {{ $hari['is_today'] ? 'today' : '' }}" style="height: {{ max(6, round(($hari['jumlah'] / $maxTren) * 90)) }}px"></div>
-                    <span class="trend-lbl {{ $hari['is_today'] ? 'today' : '' }}">{{ $hari['label'] }}</span>
-                </div>
-            @endforeach
+        <div class="trend-wrap">
+            <canvas id="dash-trend-chart"
+                data-tren='@json($trenMingguan)'
+                data-tren-lokasi='@json($trenPerLokasi)'
+                data-dot-colors='@json($dotColors)'></canvas>
         </div>
     </div>
 </div>
@@ -225,12 +194,12 @@ $namaDepan = explode(' ', auth()->user()->name)[0];
                 <h3>Kehadiran per Lokasi ( Hari ini )</h3>
             </div>
         </div>
-        @php $dotColors = ['#0e7c3f', '#ffcc00', '#0ea5e9', '#a855f7', '#f97316']; @endphp
+        @php $dotColors = $dotColors ?? ['#0e7c3f', '#ffcc00', '#0ea5e9', '#a855f7', '#f97316']; @endphp
         <div id="dash-lokasi-list" data-dot-colors="{{ json_encode($dotColors) }}" data-total-siswa="{{ $totalSiswa }}">
         @forelse($lokasiStats as $i => $lok)
             <div class="loc-item">
                 <div class="loc-top">
-                    <span class="loc-name"><span class="loc-dot" style="background:{{ $dotColors[$i % count($dotColors)] }}"></span>{{ $lok['nama'] }}</span>
+                    <span class="loc-name"><span class="loc-dot" style="background:{{ $dotColors[$i % count($dotColors)] }}"></span>Hadir di {{ $lok['nama'] }}</span>
                     <span class="loc-count">{{ $lok['jumlah'] }}</span>
                 </div>
                 <div class="loc-bar-track">
@@ -269,9 +238,75 @@ $namaDepan = explode(' ', auth()->user()->name)[0];
     var toastContainer = document.getElementById('dash-toast-container');
     var hadirValueEl = document.getElementById('dash-hadir-value');
     var hadirSubEl = document.getElementById('dash-hadir-sub');
-    var trendWrap = document.getElementById('dash-trend-wrap');
     var absenTbody = document.getElementById('dash-absen-tbody');
     var lokasiList = document.getElementById('dash-lokasi-list');
+
+    // ===== Grafik Kehadiran per Lokasi — 7 Hari Terakhir =====
+    var trendChart = null;
+    var trendCanvas = document.getElementById('dash-trend-chart');
+    var trendDotColors = trendCanvas ? JSON.parse(trendCanvas.getAttribute('data-dot-colors') || '[]') : [];
+
+    function buildTrendDatasets(trenPerLokasi) {
+        return trenPerLokasi.map(function (lok, i) {
+            var color = trendDotColors[i % trendDotColors.length] || '#0e7c3f';
+            return {
+                label: lok.nama,
+                data: lok.data,
+                borderColor: color,
+                backgroundColor: color,
+                pointBackgroundColor: color,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                borderWidth: 2,
+                tension: 0.35,
+                fill: false,
+            };
+        });
+    }
+
+    if (trendCanvas && window.Chart) {
+        var initialTren = JSON.parse(trendCanvas.getAttribute('data-tren') || '[]');
+        var initialTrenLokasi = JSON.parse(trendCanvas.getAttribute('data-tren-lokasi') || '[]');
+        trendChart = new Chart(trendCanvas.getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: initialTren.map(function (h) { return h.label; }),
+                datasets: buildTrendDatasets(initialTrenLokasi)
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, position: 'top', align: 'end', labels: { boxWidth: 10, boxHeight:10, usePointStyle: true, pointStyle: 'circle', font: { size: 12 } } },
+                    tooltip: {
+                        backgroundColor: '#1e293b',
+                        titleFont: { weight: '600', size: 12 },
+                        bodyFont: { size: 12.5 },
+                        padding: 10,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function (item) {
+                                return item.dataset.label + ': ' + item.formattedValue + ' hadir';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: '#f1f5f9' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    }
+
+    function renderTrend(data) {
+        if (!trendChart) return;
+        trendChart.data.labels = data.tren_mingguan.map(function (h) { return h.label; });
+        trendChart.data.datasets = buildTrendDatasets(data.tren_per_lokasi || []);
+        // 'none' supaya polling tiap 5 detik cuma update data tanpa mengulang animasi gambar garis;
+        // animasi hanya terjadi sekali saat chart pertama kali dibuat di atas.
+        trendChart.update('none');
+    }
 
     var dotColors = lokasiList ? JSON.parse(lokasiList.getAttribute('data-dot-colors') || '[]') : [];
     var totalSiswa = lokasiList ? parseInt(lokasiList.getAttribute('data-total-siswa') || '0', 10) : 0;
@@ -302,7 +337,7 @@ $namaDepan = explode(' ', auth()->user()->name)[0];
         toast.innerHTML =
             avatarHtml +
             '<div style="min-width:0">' +
-                '<div class="title">' + escapeHtml(item.nama) + ' baru saja absen</div>' +
+                '<div class="title">' + escapeHtml(item.nama) + ' baru saja hadir</div>' +
                 '<div class="desc">' + escapeHtml(item.kelas || '-') + ' · ' + escapeHtml(item.lokasi || '-') + ' · ' + escapeHtml(item.jam || '') + '</div>' +
             '</div>';
 
@@ -321,23 +356,6 @@ $namaDepan = explode(' ', auth()->user()->name)[0];
         if (hadirSubEl) hadirSubEl.textContent = data.persentase_hadir + '% dari total siswa · Klik untuk lihat rekap →';
     }
 
-    function renderTrend(data) {
-        if (!trendWrap) return;
-        var maxTren = Math.max(1, data.max_tren);
-        var html = '';
-        data.tren_mingguan.forEach(function (hari) {
-            var todayClass = hari.is_today ? ' today' : '';
-            var height = Math.max(6, Math.round((hari.jumlah / maxTren) * 90));
-            html +=
-                '<div class="trend-col">' +
-                    '<span class="trend-val' + todayClass + '">' + hari.jumlah + '</span>' +
-                    '<div class="trend-bar' + todayClass + '" style="height: ' + height + 'px"></div>' +
-                    '<span class="trend-lbl' + todayClass + '">' + escapeHtml(hari.label) + '</span>' +
-                '</div>';
-        });
-        trendWrap.innerHTML = html;
-    }
-
     function renderLokasi(data) {
         if (!lokasiList) return;
         if (!data.lokasi_stats.length) {
@@ -351,7 +369,7 @@ $namaDepan = explode(' ', auth()->user()->name)[0];
             html +=
                 '<div class="loc-item">' +
                     '<div class="loc-top">' +
-                        '<span class="loc-name"><span class="loc-dot" style="background:' + color + '"></span>' + escapeHtml(lok.nama) + '</span>' +
+                        '<span class="loc-name"><span class="loc-dot" style="background:' + color + '"></span>Hadir di ' + escapeHtml(lok.nama) + '</span>' +
                         '<span class="loc-count">' + lok.jumlah + '</span>' +
                     '</div>' +
                     '<div class="loc-bar-track">' +
@@ -372,7 +390,7 @@ $namaDepan = explode(' ', auth()->user()->name)[0];
             absenTbody.innerHTML =
                 '<tr><td colspan="4" style="padding:56px 20px; text-align:center; color:#94a3b8">' +
                     '<svg style="width:36px;height:36px;margin:0 auto 8px;color:#cbd5e1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>' +
-                    'Belum ada yang absen hari ini' +
+                    'Belum ada yang hadir hari ini' +
                 '</td></tr>';
             return;
         }

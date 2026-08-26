@@ -34,7 +34,7 @@
     </div>
     @if($search !== '' || $kelas !== '')
         <div class="px-6 py-2 bg-amber-50 border-b border-amber-100 text-xs text-amber-700">
-            Tombol export di atas hanya akan mengambil siswa sesuai filter yang aktif saat ini{{ $kelas !== '' ? " (kelas: {$kelas})" : '' }}{{ $search !== '' ? " (cari: \"{$search}\")" : '' }}. Untuk generate QR absensi, buka halaman <a href="{{ route('siswa.export-qr') }}" class="underline font-medium">QR Absensi</a>.
+            Tombol export di atas hanya akan mengambil siswa sesuai filter yang aktif saat ini{{ $kelas !== '' ? " (kelas: {$kelas})" : '' }}{{ $search !== '' ? " (cari: \"{$search}\")" : '' }}. Untuk generate QR presensi, buka halaman <a href="{{ route('siswa.export-qr') }}" class="underline font-medium">QR Presensi</a>.
         </div>
     @endif
 
