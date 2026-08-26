@@ -163,7 +163,7 @@ $namaDepan = explode(' ', auth()->user()->name)[0];
                 <div class="card-icon" style="background:#ecfdf5;color:#059669;">
                     <svg style="width:16px;height:16px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
-                <h3>Absensi Terbaru</h3>
+                <h3>Presensi Terbaru</h3>
             </div>
             <a href="{{ route('absensi.rekap') }}" class="card-link">Lihat semua →</a>
         </div>
@@ -207,7 +207,7 @@ $namaDepan = explode(' ', auth()->user()->name)[0];
                     <tr>
                         <td colspan="4" style="padding:56px 20px; text-align:center; color:#94a3b8">
                             <svg style="width:36px;height:36px;margin:0 auto 8px;color:#cbd5e1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                            Belum ada absensi hari ini
+                            Belum ada presensi hari ini
                         </td>
                     </tr>
                     @endforelse
@@ -238,7 +238,7 @@ $namaDepan = explode(' ', auth()->user()->name)[0];
                 </div>
             </div>
         @empty
-            <div class="loc-empty">Belum ada lokasi absensi aktif</div>
+            <div class="loc-empty">Belum ada lokasi presensi aktif</div>
         @endforelse
         </div>
     </div>
@@ -341,7 +341,7 @@ $namaDepan = explode(' ', auth()->user()->name)[0];
     function renderLokasi(data) {
         if (!lokasiList) return;
         if (!data.lokasi_stats.length) {
-            lokasiList.innerHTML = '<div class="loc-empty">Belum ada lokasi absensi aktif</div>';
+            lokasiList.innerHTML = '<div class="loc-empty">Belum ada lokasi presensi aktif</div>';
             return;
         }
         var html = '';

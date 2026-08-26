@@ -89,7 +89,7 @@
             <a href="{{ route('absensi.rekap') }}"
                class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition {{ request()->routeIs('absensi.rekap') ? 'brand-active-link' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
                 <svg class="w-5 h-5 shrink-0 {{ request()->routeIs('absensi.rekap') ? 'brand-text' : 'text-white/60 group-hover:text-white' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
-                Rekap Hari Ini
+                Presensi Hari Ini
             </a>
             <a href="{{ route('absensi.laporan') }}"
                class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition {{ request()->routeIs('absensi.laporan') ? 'brand-active-link' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
